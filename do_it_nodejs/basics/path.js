@@ -1,5 +1,5 @@
 // path 모듈 연습하기
-const path = require('path');
+const path = require('do_it_nodejs/basics/path');
 
 // join
 const fullPath = path.join('some', 'work', 'ex.txt');
