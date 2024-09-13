@@ -5,25 +5,10 @@ app.get("/", (req, res) => {
     res.send("Hello, Node!");
 });
 
-app.get("/contacts", (req, res) => {
-    res.send("Contacts page");
-});
+app.use(express.json());   // 순서주의! 아래 router보다 먼저 설정 해야 한다.
+app.use(express.urlencoded({extended: true}));   // extended: true로 설정시 query String이 중복된 개체인 것도 처리 할 수 있게 된다.
 
-app.post("/contacts/:id", (req, res) => {
-    res.send("Create Contacts");
-});
-
-app.get("/contacts/:id", (req, res) => {
-    res.send(`View Contact for ID: ${req.params.id}`);
-});
-
-app.put("/contacts/:id", (req, res) => {
-    res.send(`Update Contact for ID:" ${req.params.id}`);
-});
-
-app.delete("/contacts/:id", (req, res) => {
-    res.send(`Delete Contact for ID:" ${req.params.id}`);
-});
+app.use("/contacts", require("./routes/contactRoutes"));
 
 app.listen(3000, () => {
     console.log("Server is running");
