@@ -10,3 +10,6 @@
 config/local.json
 
 node_modules/
+
+.env
+server.env
