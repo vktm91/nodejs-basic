@@ -13,3 +13,7 @@ node_modules/
 
 .env
 server.env
+
+do_it_nodejs/myContacts/results
+do_it_nodejs/myContacts/quiz
+do_it_nodejs/myBlog/results
