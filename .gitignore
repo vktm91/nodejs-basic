@@ -1,4 +1,5 @@
 # Default ignored files
+/.idea
 /.idea/shelf/
 /workspace.xml
 # Editor-based HTTP Client requests
@@ -16,4 +17,7 @@ server.env
 
 do_it_nodejs/myContacts/results
 do_it_nodejs/myContacts/quiz
+do_it_nodejs/myContacts/assets
 do_it_nodejs/myBlog/results
+do_it_nodejs/myBlog/assets
+

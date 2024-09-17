@@ -5,27 +5,29 @@ const Contact = require('../models/contactModel');
 // GET /contacts
 const getAllContacts = asyncHandler(async (req, res) => {
     const contacts = await Contact.find();
-    const users = [
-        { name: "Kim", email: "kim@google.com", phone: "01011112222"},
-        { name: "Lee", email: "Lee@google.com", phone: "01033334444"}
-    ]
-    res.render("getAll", { users: users });
+
+    res.render("index", { contacts: contacts });
 });   // asyncHandler로 에러처리를 하여 try-catch를 사용하지 않아도 된다.
 
+// View add Contact form
+// GET /contacts/add
+const addContactForm = (req, res) => {
+    res.render("add");
+};
 
 // Create a contact
-// POST /contacts
+// POST /contacts/add
 const postContact = asyncHandler(async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     const {name, email, phone} = req.body;
     if (!name || !email || !phone) {
-        return res.status(400).send("Name, Email, Phone are required");
+        return res.send("Name, Email, Phone are required");
     }
 
     const contact = await Contact.create({
         name, email, phone
     });
-    res.status(200).send(contact);
+    res.redirect("/contacts");
 });
 
 
@@ -33,7 +35,7 @@ const postContact = asyncHandler(async (req, res) => {
 // GET /contacts/:id
 const getContact = asyncHandler(async (req, res) => {
     const contact = await Contact.findById(req.params.id);
-    res.status(200).send(contact);
+    res.render("update", { contact: contact });
 });
 
 
@@ -54,7 +56,7 @@ const updateContact = asyncHandler(async (req, res) => {
     contact.save();
 
     // res.status(200).send(contact);
-    res.json(contact);
+    res.redirect("/contacts");
 });
 
 
@@ -62,14 +64,10 @@ const updateContact = asyncHandler(async (req, res) => {
 // DELETE /contacts/:id
 const deleteContact = asyncHandler(async (req, res) => {
     const id = req.params.id;
-    const contact = await Contact.findById(id);
-    if (!contact) {
-        throw new Error("Contact not found");
-    }
 
-    await Contact.deleteOne();
+    await Contact.findByIdAndDelete(id);
 
-    res.send('Deleted');
+    res.redirect("/contacts");
 });
 
-module.exports = { getAllContacts, postContact, getContact, updateContact, deleteContact };
+module.exports = { getAllContacts, postContact, getContact, updateContact, deleteContact, addContactForm };
